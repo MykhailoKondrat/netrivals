@@ -64,5 +64,4 @@ export const productSlice = createSlice({
 
 export const { setFormula } = productSlice.actions;
 
-export const selectProducts = (state: RootState) => state.products;
 export default productSlice.reducer;

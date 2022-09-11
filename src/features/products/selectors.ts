@@ -1,6 +1,6 @@
 import { RootState } from "../../app/store";
 
-export const SelectProductById = (idToRetrieve: number) => (state: RootState) =>
+export const selectProductById = (idToRetrieve: number) => (state: RootState) =>
   state.products.productsList.find(({ id }) => id === idToRetrieve);
 
-export const SelectAllProducts = (state:RootState) => state.products.productsList
+export const selectAllProducts = (state:RootState) => state.products.productsList
