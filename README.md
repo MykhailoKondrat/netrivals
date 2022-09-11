@@ -1,7 +1,81 @@
-# Getting Started with Create React App
+# Readme
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
+## Design decision
+
+### Background 
+
+Since initial requirements did not provide any boundaries to what should be the formula , the UI solution should rely on some heuristics and general thoughts: 
+1. As formula could be applied only to value that represents a price of product: 
+    1. The result should be always > 0 and les then 100000000
+    2. Result should be rounded to 1/1000 like 
+        
+    `123.123131 => 123.123`
+
+
+2. Any sequence of  math operations could be narrowed to 4 basic math operations: `add, deduce, multiply, divide`
+  
+    #### For example 
+    `f(x) = x*4-20/5`
+    
+    `price === 10`
+
+    `f(price) =  10 + 30 - 4 => 10 + 26`
+    
+
+3. Interface with pre-defined available options is less error-prone and more predictable than the one with free user input.
+
+
+4. Basic but well-working feature is better than complex but not fully implemented.
+
+###  Possible Solutions
+There are two possible options how user can provide price modification formula from UI perspective: 
+1. Free input, so user can type in the formula.
+
+
+      ✅  Pros:
+           + user can type in complex calculations
+
+       👎 Cons:
+           - it implies user understands priorities of math operators and scopes
+
+           - easy to make a mistake by typing in incorrect symbol
+
+           - requires a legend with list of available operators.
+             For expample, not claer do user need sqrt/esponentiate/ e^x / log(x) etc.
+
+           - harder to validate, requires extensive error handling for good UX. 
+             We can't just say "formula is wrong" - but need to explain what exatly is wrong. 
+
+           -  Without strict boundaires  - really hard to test.
+           
+
+2. Basic math operation + value input, like 
+     
+   ` old price (add/deduce/multiply/divide) (some user value) =  new price`
+    
+    #### Examples:
+        price === $50
+        pirce + 2 = 52
+        pirce - 2 = 48
+        pirce * 2 = 100
+        proce / 3 = 16,667
+
+
+      ✅  Pros:
+           + Simple to use
+           + Simple validate user input
+           + Predicatable behaviuor 
+           + Easy to test
+           + Easy to write meaningful error messages.
+
+       👎 Cons:
+           - not suitable for complex scenarios when user needs to calculate price shift based on complex formula
+
+
+### Outcome
+It was decided to go with 
+    `Basic math operation + value input`
 ## Available Scripts
 
 In the project directory, you can run:
