@@ -1,6 +1,6 @@
 import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, REGISTER, PURGE, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
-import  counter from '../features/counter/counterSlice';
+import products from '../features/products/productSlice';
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
@@ -9,7 +9,7 @@ const persistConfig = {
   storage,
 }
 
-const rootReducer = combineReducers({ counter })
+const rootReducer = combineReducers({ products })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
