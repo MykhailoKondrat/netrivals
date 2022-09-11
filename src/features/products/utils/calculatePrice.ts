@@ -16,13 +16,15 @@ const ActionsMap: Record<
   divide: (initPrice, modifier) => initPrice / modifier,
 };
 
+const roundPrice = (x: number): number => parseFloat(x.toFixed(3));
+
 export const calculatePrice: CalculatePrice = (
   action,
   initPrice,
   modificationValue
 ) => {
   if (action && ActionsMap[action]) {
-    return ActionsMap[action]?.(initPrice, modificationValue) ?? 0;
+    return roundPrice(ActionsMap[action]?.(initPrice, modificationValue) ?? 0);
   }
   return 0;
 };
