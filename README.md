@@ -1,6 +1,5 @@
 # Readme
 
-
 ## Design decision
 
 ### Background 
@@ -76,6 +75,8 @@ There are two possible options how user can provide price modification formula f
 ### Outcome
 It was decided to go with 
     `Basic math operation + value input`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
