@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
 import mockedProductList from "../../mocks/mockedProductList.json";
 import { calculatePrice } from "./utils/calculatePrice";
-import {validateNewPrice} from './utils/validateNewPrice';
 
-export type FormulaActions = "add" | "deduct" | "multiply" | "divide" | null;
+export const FORMULA_ACTIONS = [
+  "add",
+  "deduct",
+  "multiply",
+  "divide",
+  "",
+] as const;
 
+export type FormulaActions = typeof FORMULA_ACTIONS[number];
 export interface ProductPriceModifierFormula {
   action: FormulaActions;
   value: number;
@@ -17,10 +22,10 @@ export interface Product {
   original_price: number;
   modified_price: number;
   formula: ProductPriceModifierFormula;
+  image_url: string;
 }
 export interface ProductState {
   productsList: Array<Product>;
-  errorMessage: string;
 }
 export interface SetFormula {
   id: number;
@@ -28,8 +33,7 @@ export interface SetFormula {
   value: number;
 }
 const initialState: ProductState = {
-  productsList: [ ...mockedProductList ],
-  errorMessage:''
+  productsList: mockedProductList as Array<Product>,
 };
 
 export const productSlice = createSlice({
@@ -37,21 +41,21 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     setFormula: (state, { payload }: PayloadAction<SetFormula>) => {
-      const productId = state.productsList.findIndex(({ id }) => id === payload.id);
-      if (productId !== -1) {
-
+      const productIndex = state.productsList.findIndex(
+        ({ id }) => id === payload.id
+      );
+      if (productIndex !== -1) {
         const newPrice = calculatePrice(
           payload.action,
-          state.productsList[productId].original_price,
+          state.productsList[productIndex].original_price,
           payload.value
         );
-        const errorMessage = validateNewPrice(newPrice)
-        state.errorMessage = errorMessage
-        if(errorMessage.length !== 0) {
-          state.productsList[productId].formula.action = payload.action;
-          state.productsList[productId].formula.value = payload.value;
-          state.productsList[productId].modified_price = newPrice
-        }
+        const hasAction = payload.action.length !== 0;
+        state.productsList[productIndex].formula.action = payload.action;
+        state.productsList[productIndex].formula.value = hasAction
+          ? payload.value
+          : 0;
+        state.productsList[productIndex].modified_price = newPrice;
       }
       // NOTE: I would usually delete comments like this, keeping it FYI
       // Redux Toolkit allows us to write "mutating" logic in reducers. It

@@ -1,21 +1,27 @@
 import React from "react";
-import { AppWrap, NavBar } from "./styles";
-import { useSelector } from "react-redux";
+import { AppWrap, ContentContainer, NavBar } from "./styles";
 import { selectAllProducts } from "../products/selectors";
+import ProductCard from "../products/components/ProductCard";
+import {useAppSelector} from '../../app/store';
 
 function App() {
-  const products = useSelector(selectAllProducts);
+  const products = useAppSelector(selectAllProducts);
   return (
     <AppWrap>
-      <NavBar />
-      <div>
+      <NavBar>
+        <h4>NetRivals</h4>
+        <p>Navigation stub</p>
+      </NavBar>
+      <ContentContainer>
         {products.map((prod) => (
-          <div key={prod.id}>
-            <p>{prod.product_name}</p>
-            <p>{prod.original_price}</p>
-          </div>
+          <ProductCard
+            key={prod.id}
+            id={prod.id}
+            product_name={prod.product_name}
+            image_url={prod.image_url}
+          />
         ))}
-      </div>
+      </ContentContainer>
     </AppWrap>
   );
 }

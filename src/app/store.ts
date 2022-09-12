@@ -2,6 +2,7 @@ import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/too
 import { FLUSH, PAUSE, PERSIST, REGISTER, PURGE, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import products from '../features/products/productSlice';
 import storage from 'redux-persist/lib/storage'
+import {TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
   key: 'root',
@@ -32,4 +33,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 

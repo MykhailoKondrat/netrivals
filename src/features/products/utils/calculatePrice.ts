@@ -7,14 +7,15 @@ export type CalculatePrice = (
 ) => number;
 
 const ActionsMap: Record<
-  NonNullable<FormulaActions>,
+  FormulaActions,
   (a: number, b: number) => number
 > = {
   add: (initPrice, modifier) => initPrice + modifier,
   deduct: (initPrice, modifier) => initPrice - modifier,
   multiply: (initPrice, modifier) => initPrice * modifier,
   divide: (initPrice, modifier) => initPrice / modifier,
-};
+  [""]:()=>0}
+;
 
 const roundPrice = (x: number): number => parseFloat(x.toFixed(3));
 
