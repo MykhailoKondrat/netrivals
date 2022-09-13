@@ -1,10 +1,4 @@
-import {
-  FC,
-  ReactElement,
-  ReactEventHandler,
-  useEffect,
-  useState,
-} from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../app/store";
 import {
   FORMULA_ACTIONS,
@@ -42,7 +36,6 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
   value,
   initialPrice,
 }) => {
-  console.log(value);
   const [editModeOn, setEditModeOn] = useState(false);
   const [selectedAction, setSelectedAction] = useState(action);
   const [inputValue, setInputValue] = useState(value ? value.toString() : "");
@@ -53,7 +46,7 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
   const handleToggleEditMode = () => {
     setEditModeOn((prev) => !prev);
   };
-  const validateInput = (): string => {
+  const validateInput = useCallback((): string => {
     if (parseFloat(inputValue) === 0 && selectedAction !== "") {
       return "Value can't be zero";
     }
@@ -61,7 +54,8 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
       return "Result should be greater then 0";
     }
     return "";
-  };
+  }, [initialPrice, inputValue, selectedAction]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -78,6 +72,10 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
         value: parseFloat(inputValue),
       })
     );
+    if (selectedAction === "") {
+      setInputValue("");
+    }
+
     handleToggleEditMode();
   };
   const handleCancel = () => {
@@ -87,7 +85,7 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
   };
   useEffect(() => {
     setInputError(validateInput());
-  }, [selectedAction, inputValue]);
+  }, [selectedAction, inputValue, validateInput]);
 
   const formulaIsSet = selectedAction !== "" && parseFloat(inputValue) !== 0;
 

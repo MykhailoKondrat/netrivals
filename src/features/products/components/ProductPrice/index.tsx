@@ -10,10 +10,10 @@ interface ProductPriceProps {
 
 export const ProductPrice: FC<ProductPriceProps> = ({ id }) => {
   const productDetails = useAppSelector(selectProductById(id));
-
+   const initialPriceLabel = productDetails?.modified_price !== 0 ? 'Previous Price' : 'Current price'
   return productDetails ? (
     <PriceWrap>
-      <h4> Old price: ${productDetails.original_price}</h4>
+      <h4> {initialPriceLabel}: ${productDetails.original_price}</h4>
       <PriceFormula
         id={id}
         action={productDetails.formula.action}

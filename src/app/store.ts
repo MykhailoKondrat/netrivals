@@ -1,11 +1,11 @@
-import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, REGISTER, PURGE, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import products from '../features/products/productSlice';
 import storage from 'redux-persist/lib/storage'
 import {TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
-  key: 'root',
+  key: 'kondrat-netrivals',
   version: 1,
   storage,
 }
@@ -27,12 +27,6 @@ export const persistor = persistStore(store)
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
