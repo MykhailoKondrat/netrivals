@@ -4,9 +4,9 @@
 
 ### Background 
 
-Since initial requirements did not provide any boundaries to what should be the formula , the UI solution should rely on some heuristics and general thoughts: 
+As initial requirements did not provide any boundaries or determination to the formula that should be applied to the price, the UI solution should rely on some heuristics and general thoughts: 
 1. As formula could be applied only to value that represents a price of product: 
-    1. The result should be always > 0 and les then 100000000
+    1. The result should be always > 0 and less then 100000000
     2. Result should be rounded to 1/1000 like 
         
     `123.123131 => 123.123`
@@ -32,8 +32,11 @@ There are two possible options how user can provide price modification formula f
 1. Free input, so user can type in the formula.
 
 
-      ✅  Pros:
-           + user can type in complex calculations
+      
+        ✅  Pros: 
+         
+            + user can type in complex calculations
+
 
        👎 Cons:
            - it implies user understands priorities of math operators and scopes
@@ -41,7 +44,7 @@ There are two possible options how user can provide price modification formula f
            - easy to make a mistake by typing in incorrect symbol
 
            - requires a legend with list of available operators.
-             For expample, not claer do user need sqrt/esponentiate/ e^x / log(x) etc.
+             For expample, not clear do user need sqrt/exponentiate/ e^x / log(x) etc.
 
            - harder to validate, requires extensive error handling for good UX. 
              We can't just say "formula is wrong" - but need to explain what exatly is wrong. 
@@ -54,14 +57,16 @@ There are two possible options how user can provide price modification formula f
    ` old price (add/deduce/multiply/divide) (some user value) =  new price`
     
     #### Examples:
-        price === $50
-        pirce + 2 = 52
-        pirce - 2 = 48
-        pirce * 2 = 100
-        proce / 3 = 16,667
+   `price === $50`
+   ` pirce + 2 = 52`
+    `pirce - 2 = 48`
+   ` pirce * 2 = 100`
+  `  price / 3 = 16,667`
 
 
-      ✅  Pros:
+
+
+        ✅  Pros:
            + Simple to use
            + Simple validate user input
            + Predicatable behaviuor 
@@ -76,6 +81,8 @@ There are two possible options how user can provide price modification formula f
 It was decided to go with 
     `Basic math operation + value input`
 
+## Libraries used
+    Redux, rtk, redux-persist - though all of the desired outcome could be achieved without them, it makes more sense to use ready-to-go solutions to save time. 
 
 ## Available Scripts
 
