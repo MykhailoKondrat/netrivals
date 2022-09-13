@@ -20,7 +20,6 @@ export const ProductCardWrap = styled.section`
 `
 
 export const ProductImage = styled.img`
-  align-self: center;
   justify-self: center;
 `
 

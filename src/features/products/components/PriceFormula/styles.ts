@@ -19,3 +19,6 @@ export const InputsWrap = styled.div`
     margin: 4px;
   }
 `;
+export const ErrorMessage = styled.p`
+  color: red;
+`

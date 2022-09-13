@@ -13,7 +13,13 @@ const ActionsMap: Record<
   add: (initPrice, modifier) => initPrice + modifier,
   deduct: (initPrice, modifier) => initPrice - modifier,
   multiply: (initPrice, modifier) => initPrice * modifier,
-  divide: (initPrice, modifier) => initPrice / modifier,
+  divide: (initPrice, modifier) => {
+    const result = initPrice / modifier
+    if (result < 0.001){
+      return 0.001
+    }
+    return result
+  },
   [""]:()=>0}
 ;
 

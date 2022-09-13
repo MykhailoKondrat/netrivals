@@ -12,7 +12,12 @@ import {
   setFormula,
 } from "../../productSlice";
 import { FaDivide, FaPlus, FaMinus, FaTimes, FaEdit } from "react-icons/fa";
-import { ControlsWrap, InputsWrap, PriceFormulaWrap } from "./styles";
+import {
+  ControlsWrap,
+  ErrorMessage,
+  InputsWrap,
+  PriceFormulaWrap,
+} from "./styles";
 
 interface PriceFormulaEditorProps {
   id: number;
@@ -53,7 +58,7 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
       return "Value can't be zero";
     }
     if (selectedAction === "deduct" && parseFloat(inputValue) > initialPrice) {
-      return "Result can't be less then 0";
+      return "Result should be greater then 0";
     }
     return "";
   };
@@ -132,7 +137,10 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
                 e.preventDefault();
                 handleSaveFormula();
               }}
-              disabled={inputError.length !== 0}
+              disabled={
+                inputError.length !== 0 ||
+                (selectedAction !== "" && inputValue === "")
+              }
             >
               Save
             </button>
@@ -145,7 +153,7 @@ export const PriceFormulaEditor: FC<PriceFormulaEditorProps> = ({
           </button>
         )}
       </ControlsWrap>
-      {inputError && <p>{inputError}</p>}
+      {inputError && <ErrorMessage>{inputError}</ErrorMessage>}
     </PriceFormulaWrap>
   );
 };
